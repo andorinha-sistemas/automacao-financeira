@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PoButtonModule, PoFieldModule, PoTableColumn, PoTableModule } from '@po-ui/ng-components';
 
@@ -44,18 +44,8 @@ export class TitlesTable {
     { property: 'irrfLabel', label: 'IRRF' },
   ];
 
-  rows(): Array<
-    TituloReceber & {
-      atrasadoFlag: string;
-      bancoLabel: string;
-      statusLabel: string;
-      alertaLabel: string;
-      valorLabel: string;
-      irrfLabel: string;
-      $selected: boolean;
-    }
-  > {
-    return this.items().map((t) => ({
+  readonly rows = computed(() =>
+    this.items().map((t) => ({
       ...t,
       atrasadoFlag: t.atrasado ? '•' : '',
       bancoLabel: t.banco === 'itau' ? 'Itaú' : t.banco,
@@ -65,8 +55,8 @@ export class TitlesTable {
       valorLabel: formatBrl(t.valor),
       irrfLabel: formatBrl(t.irrf),
       $selected: this.selecionados().has(t.id),
-    }));
-  }
+    })),
+  );
 
   onSelect(row: TituloReceber): void {
     this.toggleSelecao.emit(row.id);

@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PoFieldModule } from '@po-ui/ng-components';
 
@@ -13,6 +13,7 @@ import { FiltrosRapidos } from '../../boletos.model';
 export class QuickFilters {
   readonly filtros = input.required<FiltrosRapidos>();
   readonly toggle = output<keyof FiltrosRapidos>();
+  readonly filtrosVersion = signal(0);
 
   readonly options: { key: keyof FiltrosRapidos; label: string }[] = [
     { key: 'todos', label: 'Todos' },
@@ -29,4 +30,9 @@ export class QuickFilters {
     { key: 'bb', label: 'Banco Brasil' },
     { key: 'safra', label: 'Safra' },
   ];
+
+  onToggle(chave: keyof FiltrosRapidos): void {
+    this.toggle.emit(chave);
+    this.filtrosVersion.update((v) => v + 1);
+  }
 }

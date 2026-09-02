@@ -38,6 +38,13 @@ describe('boletos.logic', () => {
     expect(visiveis.length).toBe(titulos.filter((t) => t.portador === '341').length);
   });
 
+  it('returns a fresh Todos object when Todos is clicked while already on', () => {
+    const next = aplicarFiltroRapido(FILTROS_INICIAIS, 'todos');
+    expect(next).toEqual(FILTROS_INICIAIS);
+    expect(next).not.toBe(FILTROS_INICIAIS);
+    expect(next.todos).toBe(true);
+  });
+
   it('turns on Itaú and turns off Todos', () => {
     const next = aplicarFiltroRapido(FILTROS_INICIAIS, 'itau');
     expect(next.todos).toBe(false);
