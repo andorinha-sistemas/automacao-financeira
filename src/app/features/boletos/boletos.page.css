@@ -21,4 +21,11 @@
   font-size: 20px;
   font-weight: 700;
 }
-app-titles-table { flex: 1; min-height: 0; overflow: auto; }
+app-action-sidebar { min-height: 0; }
+app-titles-table {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

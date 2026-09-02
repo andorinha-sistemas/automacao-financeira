@@ -1,9 +1,18 @@
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  align-self: stretch;
+}
 .actions {
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 220px;
   min-width: 220px;
+  height: 100%;
+  max-height: 100%;
+  box-sizing: border-box;
   padding: 16px 12px;
   background: #fff;
   border-right: 1px solid #e5e7eb;
