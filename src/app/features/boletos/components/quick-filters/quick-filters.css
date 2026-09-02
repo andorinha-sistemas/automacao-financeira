@@ -1,0 +1,17 @@
+.filters {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+.filters__title {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}

@@ -1,0 +1,23 @@
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 220px;
+  min-width: 220px;
+  padding: 16px 12px;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  overflow: auto;
+}
+.actions__logo {
+  font-weight: 700;
+  font-size: 16px;
+  color: #0c6dc7;
+  padding: 8px 4px 12px;
+}
+.actions__caption {
+  margin: 0 4px 4px;
+  font-size: 12px;
+  color: #64748b;
+  text-transform: uppercase;
+}

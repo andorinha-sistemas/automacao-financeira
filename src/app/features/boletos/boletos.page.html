@@ -1,0 +1,20 @@
+<div class="shell">
+  <app-fin-header [context]="contexto" (sair)="onSair()" />
+  <div class="shell__body">
+    <app-action-sidebar [actions]="acoes" (acao)="onAcao($event)" />
+    <main class="shell__main">
+      <h1 class="shell__title">Gerenciador de Boletos</h1>
+      <app-quick-filters [filtros]="filtros()" (toggle)="onToggleFiltro($event)" />
+      <app-titles-table
+        [items]="titulosVisiveis()"
+        [selecionados]="selecionados()"
+        [busca]="busca()"
+        [filtrosAplicados]="filtrosAplicados()"
+        (buscaChange)="onBusca($event)"
+        (limparFiltros)="onLimparFiltros()"
+        (toggleSelecao)="onToggleSelecao($event)"
+      />
+      <app-totals-bar [totais]="totais()" />
+    </main>
+  </div>
+</div>

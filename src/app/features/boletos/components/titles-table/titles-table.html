@@ -1,0 +1,32 @@
+<section class="grid">
+  <div class="grid__bar">
+    <h2>Títulos a Receber</h2>
+    <div class="grid__tools">
+      @if (filtrosAplicados()) {
+        <p class="grid__banner">
+          Há filtros aplicados ao browse
+          <button type="button" (click)="limparFiltros.emit()">Remover</button>
+        </p>
+      }
+      <po-input
+        name="busca"
+        p-placeholder="Pesquisar"
+        [ngModel]="busca()"
+        (ngModelChange)="buscaChange.emit($event)"
+      />
+    </div>
+  </div>
+  <po-table
+    [p-columns]="columns"
+    [p-items]="rows()"
+    [p-selectable]="true"
+    [p-hide-columns-manager]="true"
+    [p-striped]="true"
+    (p-selected)="onSelect($event)"
+    (p-unselected)="onUnselect($event)"
+  >
+    <ng-template p-table-column-template [p-property]="'atrasadoFlag'" let-value>
+      <span [class.js-atrasado]="value === '•'"></span>
+    </ng-template>
+  </po-table>
+</section>

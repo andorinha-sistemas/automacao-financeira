@@ -1,0 +1,10 @@
+<header class="fin-header">
+  <div class="fin-header__brand">TOTVS <span class="fin-header__pipe">|</span> Financeiro</div>
+  <div class="fin-header__meta">
+    <span>{{ context().servidor }}</span>
+    <span>{{ context().usuario }}</span>
+    <span>{{ context().data }}</span>
+    <span>{{ context().empresa }}</span>
+    <button type="button" class="fin-header__sair" (click)="sair.emit()">Sair</button>
+  </div>
+</header>

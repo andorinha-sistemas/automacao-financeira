@@ -1,3 +1,5 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { BoletosPage } from './features/boletos/boletos.page';
+
+export const routes: Routes = [{ path: '', component: BoletosPage }];

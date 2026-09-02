@@ -1,0 +1,22 @@
+.totais {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+.totais h2 { margin: 0 0 8px; font-size: 14px; }
+.totais__row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+.totais article {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.totais span { font-size: 12px; color: #64748b; }
+.totais strong { font-size: 16px; }

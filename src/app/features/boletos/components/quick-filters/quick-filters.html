@@ -1,0 +1,12 @@
+<section class="filters">
+  <h2 class="filters__title">Filtros Rápidos</h2>
+  <div class="filters__row">
+    @for (opt of options; track opt.key) {
+      <po-checkbox
+        [p-label]="opt.label"
+        [ngModel]="filtros()[opt.key]"
+        (p-change)="toggle.emit(opt.key)"
+      />
+    }
+  </div>
+</section>

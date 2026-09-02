@@ -1,0 +1,12 @@
+<section class="totais">
+  <h2>Totais</h2>
+  <div class="totais__row">
+    <article><span>Contagem</span><strong>{{ totais().contagem }}</strong></article>
+    <article><span>Total R$</span><strong>{{ formatBrl(totais().total) }}</strong></article>
+    <article><span>Total em Aberto R$</span><strong>{{ formatBrl(totais().aberto) }}</strong></article>
+    <article><span>Total Baixado R$</span><strong>{{ formatBrl(totais().baixado) }}</strong></article>
+    <article><span>Total Conciliado R$</span><strong>{{ formatBrl(totais().conciliado) }}</strong></article>
+    <article><span>Total Não Conciliado R$</span><strong>{{ formatBrl(totais().naoConciliado) }}</strong></article>
+    <article><span>Total Marcado R$</span><strong>{{ formatBrl(totais().marcado) }}</strong></article>
+  </div>
+</section>

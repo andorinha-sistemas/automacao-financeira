@@ -1,0 +1,12 @@
+<aside class="actions">
+  <div class="actions__logo">Automação Financeira</div>
+  <p class="actions__caption">Ações</p>
+  @for (action of actions(); track action.id) {
+    <po-button
+      [p-label]="action.label"
+      p-kind="tertiary"
+      p-size="small"
+      (p-click)="acao.emit(action)"
+    />
+  }
+</aside>

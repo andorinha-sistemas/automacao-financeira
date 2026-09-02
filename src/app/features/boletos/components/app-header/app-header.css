@@ -1,0 +1,33 @@
+.fin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 16px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.fin-header__brand {
+  color: #c10015;
+  font-weight: 700;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.fin-header__pipe { font-weight: 400; }
+.fin-header__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  font-size: 12px;
+  color: #334155;
+}
+.fin-header__sair {
+  border: 1px solid #c10015;
+  background: #fff;
+  color: #c10015;
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,25 @@
+.grid { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.grid__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.grid h2 { margin: 0; font-size: 16px; }
+.grid__tools { display: flex; align-items: center; gap: 12px; }
+.grid__banner {
+  margin: 0;
+  font-size: 12px;
+  color: #334155;
+}
+.grid__banner button {
+  margin-left: 8px;
+  border: 0;
+  background: none;
+  color: #0c6dc7;
+  cursor: pointer;
+  text-decoration: underline;
+}
+:host ::ng-deep po-table tbody tr:has(.js-atrasado) td {
+  background-color: #fff4e5 !important;
+}
