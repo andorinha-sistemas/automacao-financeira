@@ -72,10 +72,11 @@ export function filtrarTitulos(
   const q = busca.trim().toLowerCase();
   return titulos.filter((t) => {
     if (q) {
-      const blob = `${t.numero} ${t.nomeCliente} ${t.prefixo}`.toLowerCase();
-      if (!blob.includes(q)) {
-        return false;
-      }
+      const hit =
+        t.numero.toLowerCase().includes(q) ||
+        t.nomeCliente.toLowerCase().includes(q) ||
+        t.prefixo.toLowerCase().includes(q);
+      if (!hit) return false;
     }
     if (filtros.todos) {
       return true;
@@ -86,7 +87,7 @@ export function filtrarTitulos(
     );
     const adiantOk = !filtros.adiantamento || t.adiantamento;
     const concilOk = matchesGroup(filtros, CONCIL_KEYS, (key) =>
-      key === 'conciliado' ? t.conciliado : !t.conciliado,
+      key === 'conciliado' ? t.conciliado === true : t.conciliado === false,
     );
     const bancoOk = matchesGroup(filtros, BANCO_KEYS, (key) => t.banco === key);
     return statusOk && borderoOk && adiantOk && concilOk && bancoOk;
@@ -105,8 +106,8 @@ export function calcularTotais(
     total: sum(() => true),
     aberto: sum((t) => t.status === 'aberto'),
     baixado: sum((t) => t.status === 'baixado'),
-    conciliado: sum((t) => t.conciliado),
-    naoConciliado: sum((t) => t.status === 'baixado' && !t.conciliado),
+    conciliado: sum((t) => t.conciliado === true),
+    naoConciliado: sum((t) => t.status === 'baixado' && t.conciliado === false),
     marcado: sum((t) => selecionados.has(t.id)),
   };
 }

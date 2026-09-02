@@ -67,6 +67,11 @@ describe('boletos.logic', () => {
     expect(found.map((t) => t.id)).toEqual(['t01']);
   });
 
+  it('does not match search across field boundaries', () => {
+    expect(filtrarTitulos(titulos, FILTROS_INICIAIS, '0 GUIL')).toEqual([]);
+    expect(filtrarTitulos(titulos, FILTROS_INICIAIS, '1000').map((t) => t.id)).toEqual(['t01']);
+  });
+
   it('reports applied filters when Todos is off or search is set', () => {
     expect(temFiltroAplicado(FILTROS_INICIAIS, '')).toBe(false);
     expect(temFiltroAplicado({ ...FILTROS_INICIAIS, todos: false, itau: true }, '')).toBe(true);
