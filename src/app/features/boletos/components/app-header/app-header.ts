@@ -1,6 +1,4 @@
-import { Component, input, output } from '@angular/core';
-
-import { BoletosContexto } from '../../boletos.model';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-fin-header',
@@ -8,6 +6,5 @@ import { BoletosContexto } from '../../boletos.model';
   styleUrl: './app-header.css',
 })
 export class AppHeader {
-  readonly context = input.required<BoletosContexto>();
   readonly sair = output<void>();
 }

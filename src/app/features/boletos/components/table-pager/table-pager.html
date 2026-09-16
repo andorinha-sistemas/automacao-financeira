@@ -1,0 +1,5 @@
+<nav class="pager" aria-label="Paginação">
+  <po-button p-label="Anterior" p-kind="secondary" p-size="small" [p-disabled]="!temAnterior()" (p-click)="anterior()" />
+  <span class="pager__label">{{ rotulo() }}</span>
+  <po-button p-label="Próxima" p-kind="secondary" p-size="small" [p-disabled]="!temProxima()" (p-click)="proxima()" />
+</nav>

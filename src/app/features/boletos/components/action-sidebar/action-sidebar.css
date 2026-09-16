@@ -3,30 +3,186 @@
   height: 100%;
   min-height: 0;
   align-self: stretch;
+  width: 228px;
+  min-width: 228px;
+  transition: width 0.2s ease, min-width 0.2s ease;
+}
+:host.recolhido {
+  width: 44px;
+  min-width: 44px;
 }
 .actions {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: 220px;
-  min-width: 220px;
+  width: 228px;
+  min-width: 228px;
   height: 100%;
   max-height: 100%;
   box-sizing: border-box;
-  padding: 16px 12px;
-  background: #fff;
-  border-right: 1px solid #e5e7eb;
+  padding: 20px 12px 12px 20px;
+  background: var(--azulescuro, #002233);
+  color: #fff;
+  overflow: hidden;
+}
+.actions--collapsed {
+  width: 44px;
+  min-width: 44px;
+  padding: 12px 6px 16px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.actions__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   overflow: auto;
 }
-.actions__logo {
-  font-weight: 700;
-  font-size: 16px;
-  color: #0c6dc7;
-  padding: 8px 4px 12px;
+.actions__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  flex-shrink: 0;
+  margin: 8px 0 0;
+  padding: 12px 0 4px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
 }
-.actions__caption {
-  margin: 0 4px 4px;
-  font-size: 12px;
-  color: #64748b;
-  text-transform: uppercase;
+.actions--collapsed .actions__footer {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  justify-content: center;
+}
+.actions__footer-label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.actions__toggle-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+.actions__footer:hover,
+.actions__footer:focus-visible {
+  outline: none;
+}
+.actions__footer:hover .actions__toggle-circle,
+.actions__footer:focus-visible .actions__toggle-circle {
+  color: var(--azulescuro, #002233);
+  background: var(--azul, #00dbff);
+  border-color: var(--azul, #00dbff);
+}
+.actions__toggle-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 7px 5px 0;
+  border-color: transparent currentColor transparent transparent;
+}
+.actions__toggle-icon--collapsed {
+  border-width: 5px 0 5px 7px;
+  border-color: transparent transparent transparent currentColor;
+}
+.actions__logo {
+  font-family: 'TOTVS', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  padding: 4px 0 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.actions ::ng-deep po-button,
+.actions ::ng-deep .po-button {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+.actions__body > po-button,
+.actions__body > po-button ::ng-deep .po-button {
+  min-height: 36px !important;
+  line-height: 24px !important;
+}
+.actions ::ng-deep po-button .po-button,
+.actions ::ng-deep .po-button {
+  color: #fff !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  padding: 6px 0 !important;
+  min-height: 0 !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  font-size: 15px !important;
+}
+.actions ::ng-deep .po-button:hover,
+.actions ::ng-deep .po-button:focus-visible {
+  color: var(--azulescuro, #002233) !important;
+  background: var(--azul, #00dbff) !important;
+}
+.actions ::ng-deep .po-button-container,
+.actions ::ng-deep .po-button-label {
+  display: flex;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.actions__group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 6px 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+.actions__group:hover,
+.actions__group:focus-visible {
+  color: var(--azulescuro, #002233);
+  background: var(--azul, #00dbff);
+  outline: none;
+}
+.actions__chevron {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 7px;
+  border-color: transparent transparent transparent currentColor;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.actions__chevron--open {
+  transform: rotate(90deg);
+}
+.actions__sub {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 0 4px;
 }

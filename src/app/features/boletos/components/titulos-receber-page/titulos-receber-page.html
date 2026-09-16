@@ -1,0 +1,44 @@
+<section class="receber">
+  <div class="receber__bar">
+    <div>
+      <h1>Contas a Receber</h1>
+      <p class="receber__rotina">FINA740</p>
+    </div>
+    <div class="receber__tools">
+      <po-input
+        name="busca-receber"
+        p-placeholder="Pesquisar"
+        p-icon="an an-magnifying-glass"
+        [ngModel]="busca()"
+        (ngModelChange)="busca.set($event)"
+      />
+    </div>
+  </div>
+  <div class="receber__actions">
+    <po-button p-label="Contas a Receber" p-kind="primary" p-size="small" (p-click)="onAcaoBarra('Contas a Receber')" />
+    <po-button p-label="Contas Recebidas" p-kind="secondary" p-size="small" (p-click)="onAcaoBarra('Contas Recebidas')" />
+    <po-button p-label="Transf/Borderô" p-kind="secondary" p-size="small" (p-click)="onAcaoBarra('Transf/Borderô')" />
+    <po-button p-label="Títulos Antecip." p-kind="secondary" p-size="small" (p-click)="onAcaoBarra('Títulos Antecip.')" />
+    <div class="receber__outras" data-outras-acoes>
+      <po-button p-label="Outras Ações" p-kind="secondary" p-size="small" (p-click)="menuAberto.set(!menuAberto())" />
+      @if (menuAberto()) {
+        <ul class="receber__menu">
+          @for (item of outrasAcoes; track item) {
+            <li>
+              <button type="button" (click)="onOutraAcao(item)">{{ item }}</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+    <po-button p-label="Voltar" p-kind="secondary" p-size="small" (p-click)="voltar.emit()" />
+  </div>
+  <app-titles-table
+    [items]="visiveis()"
+    [selecionados]="selecionados()"
+    [busca]="busca()"
+    [filtrosAplicados]="false"
+    [showBar]="false"
+    (toggleSelecao)="onToggleSelecao($event)"
+  />
+</section>

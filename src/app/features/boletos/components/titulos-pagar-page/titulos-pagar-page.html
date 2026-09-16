@@ -1,0 +1,921 @@
+<section class="pagar">
+  @if (tela() === 'titulos-pagar-form') {
+    <div class="pagar__bar">
+      <h1>Contas a Pagar</h1>
+      <div class="pagar__header-actions">
+        <po-button p-label="Outras Ações" p-kind="tertiary" p-size="small" (p-click)="onOutrasAcoesFicha()" />
+        <po-button p-label="Cancelar" p-kind="tertiary" p-size="small" (p-click)="cancelarFicha.emit()" />
+        @if (modoFicha() !== 'visualizar') {
+          <po-button p-label="Salvar" p-kind="primary" p-size="small" (p-click)="onGravar()" />
+        }
+      </div>
+    </div>
+    <div class="pagar__tabs" role="tablist">
+      @for (tab of abas; track tab.id) {
+        <button
+          type="button"
+          class="pagar__tab"
+          [class.pagar__tab--active]="aba() === tab.id"
+          (click)="aba.set(tab.id)"
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+    @if (aba() === 'dados') {
+      <form class="pagar__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Prefixo
+                <input name="prefixo" [ngModel]="ficha().prefixo" (ngModelChange)="patch('prefixo', $event)" [attr.disabled]="somenteLeitura() || chaveTravada() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>No. Título<span class="req">*</span>
+                <input name="numero" [ngModel]="ficha().numero" (ngModelChange)="patch('numero', $event)" [attr.disabled]="somenteLeitura() || chaveTravada() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Parcela
+                <input name="parcela" [ngModel]="ficha().parcela" (ngModelChange)="patch('parcela', $event)" [attr.disabled]="somenteLeitura() || chaveTravada() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Tipo<span class="req">*</span>
+                <span class="ficha__lookup">
+                  <input name="tipo" [ngModel]="ficha().tipo" (ngModelChange)="patch('tipo', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Tipo')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Natureza<span class="req">*</span>
+                <span class="ficha__lookup">
+                  <input name="natureza" [ngModel]="ficha().natureza" (ngModelChange)="patch('natureza', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Natureza')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Fornecedor<span class="req">*</span>
+                <span class="ficha__lookup">
+                  <input name="fornecedor" [ngModel]="ficha().fornecedor" (ngModelChange)="patch('fornecedor', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Fornecedor')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Loja<span class="req">*</span>
+                <input name="loja" [ngModel]="ficha().loja" (ngModelChange)="patch('loja', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Nome Fornece
+                <input name="nomeFornecedor" [ngModel]="ficha().nomeFornecedor" disabled />
+              </label>
+            </td>
+            <td>
+              <label>DT Emissão<span class="req">*</span>
+                <input name="emissao" [ngModel]="ficha().emissao" (ngModelChange)="patch('emissao', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vencimento<span class="req">*</span>
+                <input name="vencimento" [ngModel]="ficha().vencimento" (ngModelChange)="patch('vencimento', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Vencto Real<span class="req">*</span>
+                <input name="vencimentoReal" [ngModel]="ficha().vencimentoReal" (ngModelChange)="patch('vencimentoReal', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vlr. Título<span class="req">*</span>
+                <input name="valor" [ngModel]="money(ficha().valor)" (ngModelChange)="patchValor($event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td colspan="2">
+              <label>Histórico
+                <input name="historico" [ngModel]="ficha().historico" (ngModelChange)="patch('historico', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Saldo
+                <input name="saldo" [ngModel]="money(ficha().saldo)" (ngModelChange)="patchSaldo($event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Moeda
+                <input name="moeda" [ngModel]="ficha().moeda" (ngModelChange)="patchMoeda($event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vlr R$<span class="req">*</span>
+                <input name="valorRs" [ngModel]="money(ficha().valorRs)" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Taxa moeda
+                <input name="taxaMoeda" [ngModel]="taxa(ficha().taxaMoeda)" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Cód. Aprov
+                <span class="ficha__lookup">
+                  <input name="codAprovacao" [ngModel]="ficha().codAprovacao" (ngModelChange)="patch('codAprovacao', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cód. Aprov')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'impostos') {
+      <form class="pagar__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>ISS
+                <input name="iss" [ngModel]="ficha().iss" (ngModelChange)="patch('iss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>IRRF
+                <input name="irrf" [ngModel]="ficha().irrf" (ngModelChange)="patch('irrf', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>INSS
+                <input name="inss" [ngModel]="ficha().inss" (ngModelChange)="patch('inss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Com Det.
+                <select name="comDet" [ngModel]="ficha().comDet" (ngModelChange)="patch('comDet', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Cd. Retenção
+                <span class="ficha__lookup">
+                  <input name="cdRetencao" [ngModel]="ficha().cdRetencao" (ngModelChange)="patch('cdRetencao', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cd. Retenção')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>SEST/SENAT
+                <input name="sestSenat" [ngModel]="ficha().sestSenat" (ngModelChange)="patch('sestSenat', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>COFINS
+                <input name="cofins" [ngModel]="ficha().cofins" (ngModelChange)="patch('cofins', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>PIS/PASEP
+                <input name="pisPasep" [ngModel]="ficha().pisPasep" (ngModelChange)="patch('pisPasep', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>CSLL
+                <input name="csll" [ngModel]="ficha().csll" (ngModelChange)="patch('csll', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Base PCC
+                <input name="basePcc" [ngModel]="ficha().basePcc" disabled />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Venc ISS
+                <input name="vencIss" [ngModel]="ficha().vencIss" (ngModelChange)="patch('vencIss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vlr Ac.Serv
+                <input name="vlrAcServ" [ngModel]="ficha().vlrAcServ" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Variac. DCTF
+                <input name="variacDctf" [ngModel]="ficha().variacDctf" (ngModelChange)="patch('variacDctf', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Period. DCTF
+                <input name="periodDctf" [ngModel]="ficha().periodDctf" (ngModelChange)="patch('periodDctf', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Form Ret ISS
+                <select name="formRetIss" [ngModel]="ficha().formRetIss" (ngModelChange)="patch('formRetIss', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesFormRetIss; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Aplic Vl Mín
+                <select name="aplicVlMin" [ngModel]="ficha().aplicVlMin" (ngModelChange)="patch('aplicVlMin', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Cod.Aliq ISS
+                <span class="ficha__lookup">
+                  <input name="codAliqIss" [ngModel]="ficha().codAliqIss" (ngModelChange)="patch('codAliqIss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cod.Aliq ISS')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Base ISS
+                <input name="baseIss" [ngModel]="ficha().baseIss" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Base IRPF
+                <input name="baseIrpf" [ngModel]="ficha().baseIrpf" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Cide
+                <input name="cide" [ngModel]="ficha().cide" (ngModelChange)="patch('cide', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Base INSS
+                <input name="baseInss" [ngModel]="ficha().baseInss" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Cod Ret INSS
+                <span class="ficha__lookup">
+                  <input name="codRetInss" [ngModel]="ficha().codRetInss" (ngModelChange)="patch('codRetInss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cod Ret INSS')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Perc. CIDE
+                <input name="percCide" [ngModel]="ficha().percCide" (ngModelChange)="patch('percCide', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>ID DARF
+                <input name="idDarf" [ngModel]="ficha().idDarf" (ngModelChange)="patch('idDarf', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Prov INSS
+                <input name="provInss" [ngModel]="ficha().provInss" disabled />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Prov ISS
+                <input name="provIss" [ngModel]="ficha().provIss" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Perc. FABOV
+                <input name="percFabov" [ngModel]="ficha().percFabov" (ngModelChange)="patch('percFabov', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vl.FABOV
+                <input name="vlFabov" [ngModel]="ficha().vlFabov" (ngModelChange)="patch('vlFabov', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Perc FACS
+                <input name="percFacs" [ngModel]="ficha().percFacs" (ngModelChange)="patch('percFacs', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vl.FACS
+                <input name="vlFacs" [ngModel]="ficha().vlFacs" (ngModelChange)="patch('vlFacs', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Vl FAMAD
+                <input name="vlFamad" [ngModel]="ficha().vlFamad" (ngModelChange)="patch('vlFamad', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Vl FUMIPEQ
+                <input name="vlFumipeq" [ngModel]="ficha().vlFumipeq" (ngModelChange)="patch('vlFumipeq', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Perc. FAMAD
+                <input name="percFamad" [ngModel]="ficha().percFamad" (ngModelChange)="patch('percFamad', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Perc FUMIPEQ
+                <input name="percFumipeq" [ngModel]="ficha().percFumipeq" (ngModelChange)="patch('percFumipeq', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>ISS Retido
+                <input name="issRetido" [ngModel]="ficha().issRetido" (ngModelChange)="patch('issRetido', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Cod Serv ISS
+                <span class="ficha__lookup">
+                  <input name="codServIss" [ngModel]="ficha().codServIss" (ngModelChange)="patch('codServIss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cod Serv ISS')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Perc. IMA
+                <input name="percIma" [ngModel]="ficha().percIma" (ngModelChange)="patch('percIma', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Valor IMA
+                <input name="valorIma" [ngModel]="ficha().valorIma" (ngModelChange)="patch('valorIma', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'administrativo') {
+      <form class="pagar__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Taxa Perman.
+                <input name="taxaPerman" [ngModel]="ficha().taxaPerman" (ngModelChange)="patch('taxaPerman', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Porc. Juros
+                <input name="porcJuros" [ngModel]="ficha().porcJuros" (ngModelChange)="patch('porcJuros', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Acréscimo
+                <input name="acrescimo" [ngModel]="ficha().acrescimo" (ngModelChange)="patch('acrescimo', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Fluxo Caixa
+                <select name="fluxoCaixa" [ngModel]="ficha().fluxoCaixa" (ngModelChange)="patch('fluxoCaixa', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSN; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Desdobramen.
+                <select name="desdobramento" [ngModel]="ficha().desdobramento" (ngModelChange)="patch('desdobramento', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSN; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Aprovador
+                <input name="aprovador" [ngModel]="ficha().aprovador" (ngModelChange)="patch('aprovador', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Decréscimo
+                <input name="decrescimo" [ngModel]="ficha().decrescimo" (ngModelChange)="patch('decrescimo', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Mult. Natur
+                <select name="multNatur" [ngModel]="ficha().multNatur" (ngModelChange)="patch('multNatur', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Tx Cor Moeda
+                <input name="txCorMoeda" [ngModel]="ficha().txCorMoeda" (ngModelChange)="patch('txCorMoeda', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Dt Suspensão
+                <input name="dtSuspensao" [ngModel]="ficha().dtSuspensao" (ngModelChange)="patch('dtSuspensao', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Possui Desc
+                <select name="possuiDesc" [ngModel]="ficha().possuiDesc" (ngModelChange)="patch('possuiDesc', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>No. Solit.
+                <input name="noSolicitacao" [ngModel]="ficha().noSolicitacao" disabled />
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'banco') {
+      <form class="pagar__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Portador
+                <span class="ficha__lookup">
+                  <input name="portador" [ngModel]="ficha().portador" (ngModelChange)="patch('portador', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Portador')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Mod. Pagto.
+                <select name="modPagto" [ngModel]="ficha().modPagto" (ngModelChange)="patch('modPagto', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesModPagto; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td colspan="2">
+              <label>Cod. Barras
+                <input name="codBarras" [ngModel]="ficha().codBarras" (ngModelChange)="patch('codBarras', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Data Agend.
+                <input name="dataAgend" [ngModel]="ficha().dataAgend" (ngModelChange)="patch('dataAgend', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label>Linha Dig.
+                <input name="linhaDig" [ngModel]="ficha().linhaDig" (ngModelChange)="patch('linhaDig', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Banco For.
+                <span class="ficha__lookup">
+                  <input name="bancoFor" [ngModel]="ficha().bancoFor" (ngModelChange)="patch('bancoFor', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Banco For.')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Agencia For.
+                <input name="agenciaFor" [ngModel]="ficha().agenciaFor" disabled />
+              </label>
+            </td>
+            <td>
+              <label>DV Agencia
+                <input name="dvAgenciaFor" [ngModel]="ficha().dvAgenciaFor" (ngModelChange)="patch('dvAgenciaFor', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Conta For.
+                <input name="contaFor" [ngModel]="ficha().contaFor" disabled />
+              </label>
+            </td>
+            <td>
+              <label>DV Conta
+                <input name="dvContaFor" [ngModel]="ficha().dvContaFor" (ngModelChange)="patch('dvContaFor', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Forma Pgto.
+                <span class="ficha__lookup">
+                  <input name="formaPgto" [ngModel]="ficha().formaPgto" (ngModelChange)="patch('formaPgto', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Forma Pgto.')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'contabil') {
+      <form class="pagar__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Rateio
+                <select name="rateio" [ngModel]="ficha().rateio" (ngModelChange)="patch('rateio', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSN; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Cta Contábil
+                <span class="ficha__lookup">
+                  <input name="ctaContabil" [ngModel]="ficha().ctaContabil" (ngModelChange)="patch('ctaContabil', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cta Contábil')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Seq. Diario
+                <input name="seqDiario" [ngModel]="ficha().seqDiario" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Cod. Diario
+                <span class="ficha__lookup">
+                  <input name="codDiario" [ngModel]="ficha().codDiario" disabled />
+                  <button type="button" class="ficha__lupa" disabled>⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>C. de Custo
+                <span class="ficha__lookup">
+                  <input name="cCusto" [ngModel]="ficha().cCusto" (ngModelChange)="patch('cCusto', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('C. de Custo')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'outros') {
+      <form class="pagar__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Rateio Proj.
+                <select name="rateioProj" [ngModel]="ficha().rateioProj" (ngModelChange)="patch('rateioProj', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Cod. Orçam.
+                <input name="codOrcam" [ngModel]="ficha().codOrcam" (ngModelChange)="patch('codOrcam', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Num.Contrato
+                <input name="numContrato" [ngModel]="ficha().numContrato" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Revisão cont
+                <input name="revisaoCont" [ngModel]="ficha().revisaoCont" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Num. Planilh
+                <input name="numPlanilha" [ngModel]="ficha().numPlanilha" disabled />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Num. Cronogr.
+                <input name="numCronogr" [ngModel]="ficha().numCronogr" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Num. Parcela
+                <input name="numParcelaCtr" [ngModel]="ficha().numParcelaCtr" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Cod. Rda
+                <input name="codRda" [ngModel]="ficha().codRda" (ngModelChange)="patch('codRda', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Bonific Ctr
+                <input name="bonificCtr" [ngModel]="ficha().bonificCtr" (ngModelChange)="patch('bonificCtr', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Retençao Ctr
+                <input name="retencaoCtr" [ngModel]="ficha().retencaoCtr" (ngModelChange)="patch('retencaoCtr', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Multa Ctr
+                <input name="multaCtr" [ngModel]="ficha().multaCtr" (ngModelChange)="patch('multaCtr', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Desconto Ctr
+                <input name="descontoCtr" [ngModel]="ficha().descontoCtr" (ngModelChange)="patch('descontoCtr', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Proc. Judic
+                <span class="ficha__lookup">
+                  <input name="procJudic" [ngModel]="ficha().procJudic" (ngModelChange)="patch('procJudic', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Proc. Judic')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Tp. Processo
+                <select name="tpProcesso" [ngModel]="ficha().tpProcesso" disabled>
+                  <option value=""></option>
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Cod. Operad.
+                <span class="ficha__lookup">
+                  <input name="codOperad" [ngModel]="ficha().codOperad" (ngModelChange)="patch('codOperad', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Cod. Operad.')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label>Nome Operad
+                <input name="nomeOperad" [ngModel]="ficha().nomeOperad" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Ret. INSS
+                <span class="ficha__lookup">
+                  <input name="retInss" [ngModel]="ficha().retInss" (ngModelChange)="patch('retInss', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ret. INSS')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>CNPJ Ret
+                <input name="cnpjRet" [ngModel]="ficha().cnpjRet" (ngModelChange)="patch('cnpjRet', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Desc. P100
+                <select name="descP100" [ngModel]="ficha().descP100" (ngModelChange)="patch('descP100', $event)" [attr.disabled]="somenteLeitura() ? true : null">
+                  @for (opt of opcoesDescP100; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Classe Valor
+                <span class="ficha__lookup">
+                  <input name="classeValor" [ngModel]="ficha().classeValor" (ngModelChange)="patch('classeValor', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Classe Valor')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Item Contab
+                <span class="ficha__lookup">
+                  <input name="itemContab" [ngModel]="ficha().itemContab" (ngModelChange)="patch('itemContab', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Item Contab')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 05
+                <span class="ficha__lookup">
+                  <input name="entDeb05" [ngModel]="ficha().entDeb05" (ngModelChange)="patch('entDeb05', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Deb. 05')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 05
+                <span class="ficha__lookup">
+                  <input name="entCred05" [ngModel]="ficha().entCred05" (ngModelChange)="patch('entCred05', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Cred. 05')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 06
+                <span class="ficha__lookup">
+                  <input name="entDeb06" [ngModel]="ficha().entDeb06" (ngModelChange)="patch('entDeb06', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Deb. 06')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Ent.Cred. 06
+                <span class="ficha__lookup">
+                  <input name="entCred06" [ngModel]="ficha().entCred06" (ngModelChange)="patch('entCred06', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Cred. 06')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Dt. Apuração
+                <input name="dtApuracao" [ngModel]="ficha().dtApuracao" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Referencia
+                <input name="referencia" [ngModel]="ficha().referencia" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Num. Medição
+                <input name="numMedicao" [ngModel]="ficha().numMedicao" (ngModelChange)="patch('numMedicao', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 07
+                <span class="ficha__lookup">
+                  <input name="entDeb07" [ngModel]="ficha().entDeb07" (ngModelChange)="patch('entDeb07', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Deb. 07')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Ent.Cred. 07
+                <span class="ficha__lookup">
+                  <input name="entCred07" [ngModel]="ficha().entCred07" (ngModelChange)="patch('entCred07', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Cred. 07')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent. Deb. 08
+                <span class="ficha__lookup">
+                  <input name="entDeb08" [ngModel]="ficha().entDeb08" (ngModelChange)="patch('entDeb08', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent. Deb. 08')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 08
+                <span class="ficha__lookup">
+                  <input name="entCred08" [ngModel]="ficha().entCred08" (ngModelChange)="patch('entCred08', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Cred. 08')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 09
+                <span class="ficha__lookup">
+                  <input name="entDeb09" [ngModel]="ficha().entDeb09" (ngModelChange)="patch('entDeb09', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Deb. 09')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 09
+                <span class="ficha__lookup">
+                  <input name="entCred09" [ngModel]="ficha().entCred09" (ngModelChange)="patch('entCred09', $event)" [attr.disabled]="somenteLeitura() ? true : null" />
+                  <button type="button" class="ficha__lupa" (click)="onPesquisa('Ent.Cred. 09')" [attr.disabled]="somenteLeitura() ? true : null">⌕</button>
+                </span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Vlr. Ret ISS
+                <input name="vlrRetIss" [ngModel]="ficha().vlrRetIss" disabled />
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    }
+  } @else {
+    <div class="pagar__bar">
+      <div>
+        <h1>Contas a Pagar</h1>
+        <p class="pagar__rotina">FINA050</p>
+      </div>
+      <div class="pagar__tools">
+        <po-input
+          name="busca-pagar"
+          p-placeholder="Pesquisar"
+          p-icon="an an-magnifying-glass"
+          [ngModel]="busca()"
+          (ngModelChange)="busca.set($event)"
+        />
+      </div>
+    </div>
+    <div class="pagar__actions">
+      <po-button p-label="Incluir" p-kind="primary" p-size="small" (p-click)="onIncluir()" />
+      <po-button p-label="Alterar" p-kind="secondary" p-size="small" (p-click)="onAlterar()" />
+      <po-button p-label="Visualizar" p-kind="secondary" p-size="small" (p-click)="onVisualizar()" />
+      <po-button p-label="Contas Pagas" p-kind="secondary" p-size="small" (p-click)="onAcaoBarra('Contas Pagas')" />
+      <div class="pagar__outras" data-outras-acoes>
+        <po-button p-label="Outras Ações" p-kind="secondary" p-size="small" (p-click)="menuAberto.set(!menuAberto())" />
+        @if (menuAberto()) {
+          <ul class="pagar__menu">
+            @for (item of outrasAcoes; track item) {
+              <li>
+                <button type="button" (click)="onOutraAcao(item)">{{ item }}</button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+      <po-button p-label="Voltar" p-kind="secondary" p-size="small" (p-click)="voltar.emit()" />
+    </div>
+    <div class="pagar__table" [appTableResize]="columns" (appTablePageSize)="onTamanho($event)">
+      <po-table
+        [p-columns]="columns"
+        [p-items]="paginaAtual()"
+        [p-selectable]="true"
+        [p-hide-select-all]="true"
+        [p-hide-columns-manager]="true"
+        [p-striped]="true"
+        (p-selected)="onSelect($event)"
+        (p-unselected)="onUnselect()"
+      >
+        <ng-template p-table-column-template [p-property]="'situacao'" let-row>
+          <span class="pagar__legenda" [attr.data-situacao]="row.situacao" [title]="row.situacaoLabel"></span>
+        </ng-template>
+      </po-table>
+    </div>
+    <app-table-pager [total]="rows().length" [pagina]="pagina()" [tamanho]="tamanho()" (paginaChange)="onPagina($event)" />
+  }
+</section>

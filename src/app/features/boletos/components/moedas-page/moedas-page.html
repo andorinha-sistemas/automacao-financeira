@@ -1,0 +1,57 @@
+<section class="moedas">
+  <div class="moedas__bar">
+    <div>
+      <h1>Moedas</h1>
+      <p class="moedas__rotina">MATA090</p>
+      <p class="moedas__ctx">
+        Data base: {{ dataBase }}
+        <span>Empresa: {{ empresa }}</span>
+      </p>
+    </div>
+    <div class="moedas__tools">
+      <po-input
+        name="busca-moeda"
+        p-placeholder="Pesquisar"
+        p-icon="an an-magnifying-glass"
+        [ngModel]="busca()"
+        (ngModelChange)="busca.set($event)"
+      />
+      <po-button p-label="Filtrar" p-kind="secondary" p-size="small" (p-click)="onFiltrar()" />
+    </div>
+  </div>
+  <div class="moedas__actions">
+    <po-button p-label="Incluir" p-kind="primary" p-size="small" (p-click)="onIncluir()" />
+    <po-button p-label="Alterar" p-kind="secondary" p-size="small" (p-click)="onAlterar()" />
+    <div class="moedas__outras" data-outras-acoes>
+      <po-button p-label="Outras Ações" p-kind="secondary" p-size="small" (p-click)="menuAberto.set(!menuAberto())" />
+      @if (menuAberto()) {
+        <ul class="moedas__menu">
+          @for (item of outrasAcoes; track item) {
+            <li>
+              <button type="button" (click)="onOutraAcao(item)">{{ item }}</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+    <po-button p-label="Voltar" p-kind="secondary" p-size="small" (p-click)="voltar.emit()" />
+  </div>
+  <div class="moedas__table" [appTableResize]="columns" (appTablePageSize)="onTamanho($event)">
+    <po-table
+      [p-columns]="columns"
+      [p-items]="paginaAtual()"
+      [p-selectable]="true"
+      [p-hide-select-all]="true"
+      [p-hide-columns-manager]="true"
+      [p-striped]="true"
+      (p-selected)="onSelect($event)"
+      (p-unselected)="onUnselect()"
+    />
+  </div>
+  <div class="moedas__foot">
+    <button type="button" class="moedas__detalhes" (click)="onMostrarDetalhes()">
+      Mostrar Detalhes
+    </button>
+    <app-table-pager [total]="rows().length" [pagina]="pagina()" [tamanho]="tamanho()" (paginaChange)="onPagina($event)" />
+  </div>
+</section>

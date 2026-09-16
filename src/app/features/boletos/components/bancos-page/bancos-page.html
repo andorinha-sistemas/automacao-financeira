@@ -1,0 +1,462 @@
+<section class="bancos">
+  @if (tela() === 'bancos-form') {
+    <div class="bancos__bar">
+      <h1>{{ tituloFicha() }}</h1>
+      <div class="bancos__header-actions">
+        <po-button p-label="Outras Ações" p-kind="tertiary" p-size="small" [p-disabled]="true" />
+        <po-button p-label="Fechar" p-kind="primary" p-size="small" (p-click)="cancelarFicha.emit()" />
+      </div>
+    </div>
+    <div class="bancos__tabs" role="tablist">
+      @for (tab of abas; track tab.id) {
+        <button
+          type="button"
+          class="bancos__tab"
+          [class.bancos__tab--active]="aba() === tab.id"
+          (click)="aba.set(tab.id)"
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </div>
+    @if (aba() === 'cadastrais') {
+      <form class="bancos__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Codigo<span class="req">*</span>
+                <input name="codigo" [ngModel]="ficha().codigo" (ngModelChange)="patch('codigo', $event)" [disabled]="codigoTravado()" />
+              </label>
+            </td>
+            <td>
+              <label>Nro Agencia<span class="req">*</span>
+                <input name="agencia" [ngModel]="ficha().agencia" (ngModelChange)="patch('agencia', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>DV Agencia
+                <input name="dvAgencia" [ngModel]="ficha().dvAgencia" (ngModelChange)="patch('dvAgencia', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Nro Conta<span class="req">*</span>
+                <input name="conta" [ngModel]="ficha().conta" (ngModelChange)="patch('conta', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>DV Conta
+                <input name="dvConta" [ngModel]="ficha().dvConta" (ngModelChange)="patch('dvConta', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <label>Nome Banco<span class="req">*</span>
+                <input name="nome" [ngModel]="ficha().nome" (ngModelChange)="patch('nome', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td colspan="2">
+              <label>Nome Red.Bco
+                <input name="nomeReduzido" [ngModel]="ficha().nomeReduzido" (ngModelChange)="patch('nomeReduzido', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Bairro
+                <input name="bairro" [ngModel]="ficha().bairro" (ngModelChange)="patch('bairro', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Municipio
+                <input name="municipio" [ngModel]="ficha().municipio" (ngModelChange)="patch('municipio', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>CEP
+                <input name="cep" [ngModel]="ficha().cep" (ngModelChange)="patch('cep', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td colspan="2">
+              <label>Endereco
+                <input name="endereco" [ngModel]="ficha().endereco" (ngModelChange)="patch('endereco', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Fax
+                <input name="fax" [ngModel]="ficha().fax" (ngModelChange)="patch('fax', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Telex
+                <input name="telex" [ngModel]="ficha().telex" (ngModelChange)="patch('telex', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Estado
+                <input name="estado" [ngModel]="ficha().estado" (ngModelChange)="patch('estado', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Telefone
+                <input name="telefone" [ngModel]="ficha().telefone" (ngModelChange)="patch('telefone', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Caixa Postal
+                <input name="caixaPostal" [ngModel]="ficha().caixaPostal" (ngModelChange)="patch('caixaPostal', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Lim Credito
+                <input name="limCredito" [ngModel]="ficha().limCredito" (ngModelChange)="patch('limCredito', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Moeda
+                <input name="moeda" [ngModel]="ficha().moeda" (ngModelChange)="patch('moeda', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Contato
+                <input name="contato" [ngModel]="ficha().contato" (ngModelChange)="patch('contato', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Dias retencao
+                <input name="diasRetencao" [ngModel]="ficha().diasRetencao" (ngModelChange)="patch('diasRetencao', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Pais do Bco
+                <input name="paisBanco" [ngModel]="ficha().paisBanco" (ngModelChange)="patch('paisBanco', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Correntista
+                <input name="correntista" [ngModel]="ficha().correntista" (ngModelChange)="patch('correntista', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Fornecedor
+                <input name="fornecedor" [ngModel]="ficha().fornecedor" (ngModelChange)="patch('fornecedor', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Cliente
+                <input name="clienteBanco" [ngModel]="ficha().cliente" (ngModelChange)="patch('cliente', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Loja Cliente
+                <input name="lojaCliente" [ngModel]="ficha().lojaCliente" (ngModelChange)="patch('lojaCliente', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Bloqueado
+                <select name="bloqueado" [ngModel]="ficha().bloqueado" (ngModelChange)="patch('bloqueado', $event)" [disabled]="somenteLeitura()">
+                  @for (opt of opcoesBloqueado; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Dt. Bloqueio
+                <input name="dtBloqueio" [ngModel]="ficha().dtBloqueio" (ngModelChange)="patch('dtBloqueio', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Titularidade
+                <select name="titularidade" [ngModel]="ficha().titularidade" (ngModelChange)="patch('titularidade', $event)" [disabled]="somenteLeitura()">
+                  @for (opt of opcoesTitularidade; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Loja Fornec
+                <input name="lojaFornec" [ngModel]="ficha().lojaFornec" (ngModelChange)="patch('lojaFornec', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>CPF/CNPJ
+                <input name="cpfCnpj" [ngModel]="ficha().cpfCnpj" (ngModelChange)="patch('cpfCnpj', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Bco Oficial
+                <input name="bcoOficial" [ngModel]="ficha().bcoOficial" (ngModelChange)="patch('bcoOficial', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Pais Conta
+                <input name="paisConta" [ngModel]="ficha().paisConta" (ngModelChange)="patch('paisConta', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Cod ISPB
+                <input name="codIspb" [ngModel]="ficha().codIspb" (ngModelChange)="patch('codIspb', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'comunicacao') {
+      <form class="bancos__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td colspan="2">
+              <label>Cod. Cedente
+                <input name="codCedente" [ngModel]="ficha().codCedente" (ngModelChange)="patch('codCedente', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Multa PIX
+                <input name="multaPix" [ngModel]="ficha().multaPix" (ngModelChange)="patch('multaPix', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Dias Exp PIX
+                <input name="diasExpPix" [ngModel]="ficha().diasExpPix" (ngModelChange)="patch('diasExpPix', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'movimentos') {
+      <form class="bancos__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Ret. p/ Descon
+                <input name="retDesconto" [ngModel]="ficha().retDesconto" (ngModelChange)="patch('retDesconto', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td colspan="2">
+              <label>Saldo Atual
+                <input name="saldoAtual" [ngModel]="ficha().saldoAtual" disabled />
+              </label>
+            </td>
+            <td>
+              <label>Tx cob simpl
+                <input name="txCobSimpl" [ngModel]="ficha().txCobSimpl" (ngModelChange)="patch('txCobSimpl', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Taxa Descon.
+                <input name="taxaDesconto" [ngModel]="ficha().taxaDesconto" (ngModelChange)="patch('taxaDesconto', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'contabil') {
+      <form class="bancos__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td colspan="2">
+              <label>Conta Contab
+                <input name="contaContabil" [ngModel]="ficha().contaContabil" (ngModelChange)="patch('contaContabil', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Entidade Fin
+                <input name="entidadeFin" [ngModel]="ficha().entidadeFin" (ngModelChange)="patch('entidadeFin', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'integracoes') {
+      <form class="bancos__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Nro Banco
+                <input name="nroBanco" [ngModel]="ficha().nroBanco" (ngModelChange)="patch('nroBanco', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ident.Export
+                <input name="identExport" [ngModel]="ficha().identExport" disabled />
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label>Dados Intern
+                <textarea name="dadosIntern" rows="6" [ngModel]="ficha().dadosIntern" (ngModelChange)="patch('dadosIntern', $event)" [disabled]="somenteLeitura()"></textarea>
+              </label>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+    } @else if (aba() === 'outros') {
+      <form class="bancos__form" (submit)="$event.preventDefault()">
+        <table class="ficha">
+          <colgroup>
+            <col /><col /><col /><col /><col />
+          </colgroup>
+          <tr>
+            <td>
+              <label>Ent.Deb. 05
+                <input name="entDeb05" [ngModel]="ficha().entDeb05" (ngModelChange)="patch('entDeb05', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 05
+                <input name="entCred05" [ngModel]="ficha().entCred05" (ngModelChange)="patch('entCred05', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 06
+                <input name="entDeb06" [ngModel]="ficha().entDeb06" (ngModelChange)="patch('entDeb06', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 06
+                <input name="entCred06" [ngModel]="ficha().entCred06" (ngModelChange)="patch('entCred06', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 07
+                <input name="entDeb07" [ngModel]="ficha().entDeb07" (ngModelChange)="patch('entDeb07', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Ent.Cred. 07
+                <input name="entCred07" [ngModel]="ficha().entCred07" (ngModelChange)="patch('entCred07', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 08
+                <input name="entDeb08" [ngModel]="ficha().entDeb08" (ngModelChange)="patch('entDeb08', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 08
+                <input name="entCred08" [ngModel]="ficha().entCred08" (ngModelChange)="patch('entCred08', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Deb. 09
+                <input name="entDeb09" [ngModel]="ficha().entDeb09" (ngModelChange)="patch('entDeb09', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+            <td>
+              <label>Ent.Cred. 09
+                <input name="entCred09" [ngModel]="ficha().entCred09" (ngModelChange)="patch('entCred09', $event)" [disabled]="somenteLeitura()" />
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label>Integra
+                <select name="integra" [ngModel]="ficha().integra" (ngModelChange)="patch('integra', $event)" [disabled]="somenteLeitura()">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td>
+              <label>Cnt TechFin
+                <select name="cntTechFin" [ngModel]="ficha().cntTechFin" (ngModelChange)="patch('cntTechFin', $event)" [disabled]="somenteLeitura()">
+                  @for (opt of opcoesSimNao; track opt.value) {
+                    <option [value]="opt.value">{{ opt.label }}</option>
+                  }
+                </select>
+              </label>
+            </td>
+            <td colspan="3">
+              <label>ID - TechFin
+                <input name="idTechFin" [ngModel]="ficha().idTechFin" disabled />
+              </label>
+            </td>
+          </tr>
+        </table>
+      </form>
+    } @else {
+      <p class="bancos__empty-tab">Aba {{ aba() }} sem dados neste mock.</p>
+    }
+    <div class="bancos__actions">
+      @if (!somenteLeitura()) {
+        <po-button p-label="Confirmar" p-kind="primary" p-size="small" (p-click)="gravar.emit(ficha())" />
+      }
+    </div>
+  } @else {
+    <div class="bancos__bar">
+      <h1>Cadastro de Bancos</h1>
+      <div class="bancos__tools">
+        <po-input
+          name="busca-banco"
+          p-placeholder="Pesquisar"
+          p-icon="an an-magnifying-glass"
+          [ngModel]="busca()"
+          (ngModelChange)="busca.set($event)"
+        />
+      </div>
+    </div>
+    <div class="bancos__actions">
+      <po-button p-label="Incluir" p-kind="primary" p-size="small" (p-click)="incluir.emit()" />
+      <po-button p-label="Alterar" p-kind="secondary" p-size="small" (p-click)="onAlterar()" />
+      <po-button p-label="Visualizar" p-kind="secondary" p-size="small" (p-click)="onVisualizar()" />
+      <po-button p-label="Excluir" p-kind="secondary" p-size="small" (p-click)="onExcluir()" />
+      <po-button p-label="Voltar" p-kind="secondary" p-size="small" (p-click)="voltar.emit()" />
+    </div>
+    <div class="bancos__table" [appTableResize]="columns" (appTablePageSize)="onTamanho($event)">
+      <po-table
+        [p-columns]="columns"
+        [p-items]="paginaAtual()"
+        [p-selectable]="true"
+        [p-hide-select-all]="true"
+        [p-hide-columns-manager]="true"
+        [p-striped]="true"
+        (p-selected)="onSelect($event)"
+        (p-unselected)="onUnselect()"
+      />
+    </div>
+    <app-table-pager [total]="visiveis().length" [pagina]="pagina()" [tamanho]="tamanho()" (paginaChange)="onPagina($event)" />
+  }
+</section>

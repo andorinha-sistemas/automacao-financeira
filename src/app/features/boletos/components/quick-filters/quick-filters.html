@@ -1,14 +1,25 @@
 <section class="filters">
-  <h2 class="filters__title">Filtros Rápidos</h2>
+  <h2 class="filters__title">{{ title() }}</h2>
   <div class="filters__row">
     @for (_v of [filtrosVersion()]; track _v) {
-      @for (opt of options; track opt.key + filtrosVersion()) {
-        <po-checkbox
-          [p-label]="opt.label"
-          [ngModel]="filtros()[opt.key]"
-          [ngModelOptions]="{ standalone: true }"
-          (p-change)="onToggle(opt.key)"
-        />
+      @for (opt of options(); track opt.key + filtrosVersion()) {
+        <span
+          class="filters__opt"
+          [class.filters__opt--banco]="!!opt.icon"
+          [class.filters__opt--itau]="opt.key === 'itau'"
+          [class.filters__opt--santander]="opt.key === 'santander'"
+          [class.filters__opt--bb]="opt.key === 'bb'"
+          [class.filters__opt--safra]="opt.key === 'safra'"
+          [class.filters__opt--bradesco]="opt.key === 'bradesco'"
+          [class.filters__opt--caixa]="opt.key === 'caixa'"
+        >
+          <po-checkbox
+            [p-label]="opt.label"
+            [ngModel]="filtros()[opt.key]"
+            [ngModelOptions]="{ standalone: true }"
+            (p-change)="onToggle(opt.key)"
+          />
+        </span>
       }
     }
   </div>

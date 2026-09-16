@@ -1,33 +1,44 @@
-<section class="grid">
-  <div class="grid__bar">
-    <h2>Títulos a Receber</h2>
-    <div class="grid__tools">
-      @if (filtrosAplicados()) {
-        <p class="grid__banner">
-          Há filtros aplicados ao browse
-          <button type="button" (click)="limparFiltros.emit()">Remover</button>
-        </p>
-      }
-      <po-input
-        name="busca"
-        p-placeholder="Pesquisar"
-        [ngModel]="busca()"
-        (ngModelChange)="buscaChange.emit($event)"
-      />
+<section class="grid" [class.grid--embedded]="!showBar()">
+  @if (showBar()) {
+    <div class="grid__bar">
+      <h2>Títulos a Receber</h2>
+      <div class="grid__tools">
+        @if (filtrosAplicados()) {
+          <p class="grid__banner">
+            Há filtros aplicados ao browse
+            <button type="button" (click)="limparFiltros.emit()">Remover</button>
+          </p>
+        }
+        <po-input
+          name="busca"
+          p-placeholder="Pesquisar"
+          p-icon="an an-magnifying-glass"
+          [ngModel]="busca()"
+          (ngModelChange)="buscaChange.emit($event)"
+        />
+      </div>
     </div>
+  }
+  <div class="grid__table" [appTableResize]="columns" (appTablePageSize)="onTamanho($event)">
+    <po-table
+      [p-columns]="columns"
+      [p-items]="paginaAtual()"
+      [p-selectable]="true"
+      [p-hide-select-all]="true"
+      [p-hide-columns-manager]="true"
+      [p-striped]="true"
+      (p-selected)="onSelect($event)"
+      (p-unselected)="onUnselect($event)"
+    >
+      <ng-template p-table-column-template [p-property]="'banco'" let-value>
+        @if (value) {
+          <span class="banco">
+            <img [src]="iconFor(value)" [alt]="nomeFor(value)" class="banco__icon" />
+            <span>{{ nomeFor(value) }}</span>
+          </span>
+        }
+      </ng-template>
+    </po-table>
   </div>
-  <po-table
-    [p-columns]="columns"
-    [p-items]="rows()"
-    [p-selectable]="true"
-    [p-hide-select-all]="true"
-    [p-hide-columns-manager]="true"
-    [p-striped]="true"
-    (p-selected)="onSelect($event)"
-    (p-unselected)="onUnselect($event)"
-  >
-    <ng-template p-table-column-template [p-property]="'atrasadoFlag'" let-value>
-      <span [class.js-atrasado]="value === '•'"></span>
-    </ng-template>
-  </po-table>
+  <app-table-pager [total]="rows().length" [pagina]="pagina()" [tamanho]="tamanho()" (paginaChange)="onPagina($event)" />
 </section>

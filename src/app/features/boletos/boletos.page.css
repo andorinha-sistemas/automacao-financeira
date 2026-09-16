@@ -3,11 +3,14 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f3f4f6;
-  color: #1a1f36;
-  font-family: 'Nunito Sans', 'Segoe UI', sans-serif;
+  background: #eef2f4;
+  color: #1d2426;
 }
-.shell__body { display: flex; flex: 1; min-height: 0; }
+.shell__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
 .shell__main {
   flex: 1;
   display: flex;
@@ -18,11 +21,18 @@
 }
 .shell__title {
   margin: 0;
+  font-family: 'TOTVS', sans-serif;
   font-size: 20px;
   font-weight: 700;
+  color: var(--azulescuro, #002233);
 }
 app-action-sidebar { min-height: 0; }
-app-titles-table {
+app-titles-table,
+app-bancos-page,
+app-titulos-pagar-page,
+app-titulos-receber-page,
+app-clientes-page,
+app-moedas-page {
   flex: 1;
   min-height: 0;
   overflow: hidden;

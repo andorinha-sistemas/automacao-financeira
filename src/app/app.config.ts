@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import {
   ApplicationConfig,
   importProvidersFrom,
@@ -6,16 +6,17 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { PoHttpRequestModule } from '@po-ui/ng-components';
+import { PoDialogModule, PoHttpRequestModule } from '@po-ui/ng-components';
 
 import { routes } from './app.routes';
+import { plugAuthInterceptor } from './features/boletos/plug.auth';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    importProvidersFrom([PoHttpRequestModule]),
+    importProvidersFrom([PoHttpRequestModule, PoDialogModule]),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptors([plugAuthInterceptor]), withInterceptorsFromDi()),
   ],
 };

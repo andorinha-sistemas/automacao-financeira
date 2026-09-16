@@ -1,12 +1,55 @@
-<aside class="actions">
-  <div class="actions__logo">Automação Financeira</div>
-  <p class="actions__caption">Ações</p>
-  @for (action of actions(); track action.id) {
-    <po-button
-      [p-label]="action.label"
-      p-kind="tertiary"
-      p-size="small"
-      (p-click)="acao.emit(action)"
-    />
+<aside class="actions" [class.actions--collapsed]="recolhido()">
+  @if (!recolhido()) {
+    <div class="actions__body">
+      <div class="actions__logo">Automação Financeira</div>
+      @for (action of actions(); track action.id) {
+        @if (temFilhos(action)) {
+          <button
+            type="button"
+            class="actions__group"
+            [attr.data-group]="action.id"
+            [attr.aria-expanded]="estaAberto(action.id)"
+            (click)="onGrupo(action)"
+          >
+            {{ action.label }}
+            <span class="actions__chevron" [class.actions__chevron--open]="estaAberto(action.id)"></span>
+          </button>
+          @if (estaAberto(action.id)) {
+            <div class="actions__sub">
+              @for (child of action.children; track child.id) {
+                <po-button
+                  [p-label]="child.label"
+                  p-kind="tertiary"
+                  p-size="small"
+                  (p-click)="acao.emit(child)"
+                />
+              }
+            </div>
+          }
+        } @else {
+          <po-button
+            [p-label]="action.label"
+            p-kind="tertiary"
+            p-size="small"
+            (p-click)="acao.emit(action)"
+          />
+        }
+      }
+    </div>
   }
+  <button
+    type="button"
+    class="actions__footer"
+    data-toggle-sidebar
+    [attr.aria-expanded]="!recolhido()"
+    [attr.aria-label]="recolhido() ? 'Expandir menu' : 'Fechar menu'"
+    (click)="alternarRecolher()"
+  >
+    @if (!recolhido()) {
+      <span class="actions__footer-label">Fechar menu</span>
+    }
+    <span class="actions__toggle-circle">
+      <span class="actions__toggle-icon" [class.actions__toggle-icon--collapsed]="recolhido()"></span>
+    </span>
+  </button>
 </aside>

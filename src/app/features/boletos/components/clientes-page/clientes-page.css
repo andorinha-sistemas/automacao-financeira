@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+.clientes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dadedf;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.clientes__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.clientes h1 {
+  margin: 0;
+  font-family: 'TOTVS', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--azulescuro, #002233);
+}
+.clientes__rotina {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #5d6a6e;
+}
+.clientes__tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+:host ::ng-deep .clientes__tools .po-input {
+  min-height: 36px !important;
+  height: 36px;
+  border-color: #c5ccd0 !important;
+}
+.clientes__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.clientes__outras {
+  position: relative;
+}
+:host ::ng-deep .clientes__outras .po-button {
+  gap: 8px;
+}
+:host ::ng-deep .clientes__outras .po-button::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+.clientes__menu {
+  position: absolute;
+  z-index: 8;
+  top: calc(100% + 4px);
+  left: 0;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  min-width: 220px;
+  max-height: 360px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #dadedf;
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 34, 51, 0.16);
+}
+.clientes__menu button {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 8px 12px;
+  text-align: left;
+  font: inherit;
+  font-size: 13px;
+  color: var(--azulescuro, #002233);
+  cursor: pointer;
+}
+.clientes__menu button:hover {
+  background: #e8eef1;
+}
+.clientes__menu-item--sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.clientes__menu-item--sub::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 5px solid currentColor;
+}
+.clientes__table {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+:host ::ng-deep .clientes__table po-table {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.clientes__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.clientes__total {
+  margin: 0;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #5d6a6e;
+}

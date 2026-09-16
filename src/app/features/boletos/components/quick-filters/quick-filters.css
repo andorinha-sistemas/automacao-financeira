@@ -1,17 +1,62 @@
 .filters {
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  padding: 8px 12px;
+  border: 1px solid #dadedf;
+  border-radius: 8px;
+  padding: 12px 16px;
 }
 .filters__title {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  font-family: 'TOTVS', sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--azulescuro, #002233);
 }
 .filters__row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
   align-items: center;
+  gap: 8px 16px;
+}
+.filters__opt {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.filters__opt ::ng-deep po-checkbox {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  margin: 0;
+}
+.filters__opt--banco ::ng-deep .po-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.filters__opt--banco ::ng-deep .po-checkbox-label::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: center / cover no-repeat;
+  flex-shrink: 0;
+}
+.filters__opt--itau ::ng-deep .po-checkbox-label::before {
+  background-image: url('/assets/bancos/itau.png');
+}
+.filters__opt--santander ::ng-deep .po-checkbox-label::before {
+  background-image: url('/assets/bancos/santander.png');
+}
+.filters__opt--bb ::ng-deep .po-checkbox-label::before {
+  background-image: url('/assets/bancos/bb.png');
+}
+.filters__opt--safra ::ng-deep .po-checkbox-label::before {
+  background-image: url('/assets/bancos/safra.png');
+}
+.filters__opt--bradesco ::ng-deep .po-checkbox-label::before {
+  background-image: url('/assets/bancos/bradesco.png');
+}
+.filters__opt--caixa ::ng-deep .po-checkbox-label::before {
+  background-image: url('/assets/bancos/caixa.png');
 }

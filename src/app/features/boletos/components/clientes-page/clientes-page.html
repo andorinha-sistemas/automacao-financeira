@@ -1,0 +1,51 @@
+<section class="clientes">
+  <div class="clientes__bar">
+    <div>
+      <h1>Clientes</h1>
+      <p class="clientes__rotina">MATA030</p>
+    </div>
+    <div class="clientes__tools">
+      <po-input
+        name="busca-cliente"
+        p-placeholder="Pesquisar"
+        p-icon="an an-magnifying-glass"
+        [ngModel]="busca()"
+        (ngModelChange)="busca.set($event)"
+      />
+    </div>
+  </div>
+  <div class="clientes__actions">
+    <po-button p-label="Incluir" p-kind="primary" p-size="small" (p-click)="onIncluir()" />
+    <po-button p-label="Alterar" p-kind="secondary" p-size="small" (p-click)="onAlterar()" />
+    <po-button p-label="Visualizar" p-kind="secondary" p-size="small" (p-click)="onVisualizar()" />
+    <div class="clientes__outras" data-outras-acoes>
+      <po-button p-label="Outras Ações" p-kind="secondary" p-size="small" (p-click)="menuAberto.set(!menuAberto())" />
+      @if (menuAberto()) {
+        <ul class="clientes__menu">
+          @for (item of outrasAcoes; track item) {
+            <li>
+              <button type="button" [class.clientes__menu-item--sub]="item === 'Perfil_360'" (click)="onOutraAcao(item)">{{ item }}</button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+    <po-button p-label="Voltar" p-kind="secondary" p-size="small" (p-click)="voltar.emit()" />
+  </div>
+  <div class="clientes__table" [appTableResize]="columns" (appTablePageSize)="onTamanho($event)">
+    <po-table
+      [p-columns]="columns"
+      [p-items]="paginaAtual()"
+      [p-selectable]="true"
+      [p-hide-select-all]="true"
+      [p-hide-columns-manager]="true"
+      [p-striped]="true"
+      (p-selected)="onSelect($event)"
+      (p-unselected)="onUnselect()"
+    />
+  </div>
+  <div class="clientes__foot">
+    <p class="clientes__total">Total de Registros: {{ visiveis().length }}</p>
+    <app-table-pager [total]="visiveis().length" [pagina]="pagina()" [tamanho]="tamanho()" (paginaChange)="onPagina($event)" />
+  </div>
+</section>

@@ -1,20 +1,61 @@
 <div class="shell">
-  <app-fin-header [context]="contexto" (sair)="onSair()" />
+  <app-fin-header (sair)="onSair()" />
   <div class="shell__body">
     <app-action-sidebar [actions]="acoes" (acao)="onAcao($event)" />
     <main class="shell__main">
-      <h1 class="shell__title">Gerenciador de Boletos</h1>
-      <app-quick-filters [filtros]="filtros()" (toggle)="onToggleFiltro($event)" />
-      <app-titles-table
-        [items]="titulosVisiveis()"
-        [selecionados]="selecionados()"
-        [busca]="busca()"
-        [filtrosAplicados]="filtrosAplicados()"
-        (buscaChange)="onBusca($event)"
-        (limparFiltros)="onLimparFiltros()"
-        (toggleSelecao)="onToggleSelecao($event)"
-      />
-      <app-totals-bar [totais]="totais()" />
+      @if (telaAtiva() === 'boletos') {
+        <h1 class="shell__title">Gerenciador de Boletos</h1>
+        <app-quick-filters [filtros]="filtros()" (toggle)="onToggleFiltro($event)" />
+        <app-quick-filters
+          title="Bancos"
+          [options]="filtrosBancos"
+          [filtros]="filtros()"
+          (toggle)="onToggleFiltro($event)"
+        />
+        <app-titles-table
+          [items]="titulosVisiveis()"
+          [selecionados]="selecionados()"
+          [busca]="busca()"
+          [filtrosAplicados]="filtrosAplicados()"
+          (buscaChange)="onBusca($event)"
+          (limparFiltros)="onLimparFiltros()"
+          (toggleSelecao)="onToggleSelecao($event)"
+        />
+        <app-totals-bar [totais]="totais()" />
+      } @else if (telaAtiva() === 'titulos-pagar' || telaAtiva() === 'titulos-pagar-form') {
+        <app-titulos-pagar-page
+          [titulos]="titulosPagar()"
+          [tela]="telaPagar()"
+          [modoFicha]="modoFichaPagar()"
+          [rascunho]="rascunhoPagar()"
+          (voltar)="onVoltarTitulosPagar()"
+          (incluir)="onIncluirTituloPagar()"
+          (alterar)="onAlterarTituloPagar($event)"
+          (visualizar)="onVisualizarTituloPagar($event)"
+          (gravar)="onGravarTituloPagar($event)"
+          (cancelarFicha)="onCancelarFichaPagar()"
+        />
+      } @else if (telaAtiva() === 'titulos-receber') {
+        <app-titulos-receber-page [titulos]="titulosReceber()" (voltar)="onVoltarTitulosReceber()" />
+      } @else if (telaAtiva() === 'clientes') {
+        <app-clientes-page [clientes]="clientes()" (voltar)="onVoltarClientes()" />
+      } @else if (telaAtiva() === 'moedas') {
+        <app-moedas-page [moedas]="moedas()" (voltar)="onVoltarMoedas()" />
+      } @else {
+        <app-bancos-page
+          [bancos]="bancos()"
+          [tela]="telaBancos()"
+          [modoFicha]="modoFicha()"
+          [rascunho]="rascunho()"
+          (voltar)="onVoltarBancos()"
+          (incluir)="onIncluirBanco()"
+          (alterar)="onAlterarBanco($event)"
+          (visualizar)="onVisualizarBanco($event)"
+          (excluir)="onExcluirBanco($event)"
+          (gravar)="onGravarFicha($event)"
+          (cancelarFicha)="onCancelarFicha()"
+        />
+      }
     </main>
   </div>
 </div>

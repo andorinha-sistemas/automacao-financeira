@@ -1,22 +1,32 @@
 .totais {
   background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  padding: 8px 12px;
+  border: 1px solid #dadedf;
+  border-radius: 8px;
+  padding: 12px 16px;
 }
-.totais h2 { margin: 0 0 8px; font-size: 14px; }
+.totais h2 {
+  margin: 0 0 10px;
+  font-family: 'TOTVS', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--azulescuro, #002233);
+}
 .totais__row {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
 }
 .totais article {
-  border: 1px solid #e5e7eb;
-  border-radius: 4px;
-  padding: 8px;
+  border: 1px solid #dadedf;
+  border-radius: 8px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  background: #fbfbfb;
 }
-.totais span { font-size: 12px; color: #64748b; }
-.totais strong { font-size: 16px; }
+.totais span { font-size: 12px; color: #4a5c60; }
+.totais strong {
+  font-size: 16px;
+  color: var(--azulescuro, #002233);
+}

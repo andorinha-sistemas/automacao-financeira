@@ -1,10 +1,25 @@
 <header class="fin-header">
-  <div class="fin-header__brand">TOTVS <span class="fin-header__pipe">|</span> Financeiro</div>
-  <div class="fin-header__meta">
-    <span>{{ context().servidor }}</span>
-    <span>{{ context().usuario }}</span>
-    <span>{{ context().data }}</span>
-    <span>{{ context().empresa }}</span>
+  <div class="fin-header__brand">
+    <img
+      class="fin-header__logo"
+      src="assets/brand/logo-totvs-branco.svg"
+      alt="TOTVS"
+    />
+    <span class="fin-header__product">Financeiro</span>
+  </div>
+  <div class="fin-header__actions">
+    <button type="button" class="fin-header__icon" aria-label="Notificações">
+      <span class="fin-header__bell">
+        <span class="fin-header__glyph fin-header__glyph--bell" aria-hidden="true"></span>
+        <span class="fin-header__badge">5</span>
+      </span>
+    </button>
+    <button type="button" class="fin-header__icon" aria-label="Ajuda">
+      <span class="fin-header__glyph fin-header__glyph--help" aria-hidden="true"></span>
+    </button>
+    <button type="button" class="fin-header__icon" aria-label="Configurações">
+      <span class="fin-header__glyph fin-header__glyph--settings" aria-hidden="true"></span>
+    </button>
     <button type="button" class="fin-header__sair" (click)="sair.emit()">Sair</button>
   </div>
 </header>
